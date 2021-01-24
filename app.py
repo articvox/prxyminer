@@ -14,12 +14,17 @@ app = Flask(__name__)
 server = Server()
 
 
-@app.route('/get-candidates')
+@app.route('/candidate')
+def get_candidate():
+    return jsonify(server.get_candidate())
+
+
+@app.route('/candidates')
 def get_candidates():
     return jsonify(server.get_candidates())
 
 
-@app.route('/invalidate-cache')
+@app.route('/invalidate')
 def invalidate():
     server.invalidate()
     return app.response_class(response = None, status = 200)

@@ -15,3 +15,6 @@ class Candidate:
             'address': self.address,
             'port': self.port
         }
+
+    def to_json(self):
+        return self.__dict__()
