@@ -9,6 +9,7 @@ from log.log import Log
 from scheduler.scheduler import Scheduler
 
 Log.init()
+
 scheduler = Scheduler().start()
 
 client = ParsingCandidatesClient(
