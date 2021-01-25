@@ -2,7 +2,7 @@ import threading
 
 from flask import Flask, jsonify, request
 
-from cachedpool.cachedpool import CachedPool
+from cache.cachedpool import CachedPool
 from candidates.client.impl.parsingcandidatesclient import ParsingCandidatesClient
 from candidates.parser.impl.freeproxylist import FreeProxyListParser
 from log.log import Log
@@ -25,10 +25,16 @@ app = Flask(__name__)
 @app.route('/get', methods = ['GET'])
 def get_candidates():
     count = int(request.args.get('count'))
-    return jsonify([candidate.to_json() for candidate in candidate_pool.get_next_n(count)])
+    return jsonify([candidate.to_json() for candidate in candidate_pool.get_next(count)])
 
 
 @app.route('/invalidate')
 def invalidate():
-    candidate_pool.schedule_rebuild(lambda rebuild: threading.Thread(target = rebuild, daemon = True).start())
-    return app.response_class(response = None, status = 200)
+    candidate_pool.schedule_rebuild(lambda rebuild: threading
+                                    .Thread(target = rebuild, daemon = True)
+                                    .start())
+
+    return app.response_class(
+        response = None,
+        status = 200
+    )

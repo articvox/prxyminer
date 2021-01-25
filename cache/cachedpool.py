@@ -45,10 +45,7 @@ class CachedPool:
         LOG.info('Pool filled ' + size(self.__pool))
         random.shuffle(self.__pool)
 
-    def get_next(self) -> Any:
-        return self.get_next_n(1)[0]
-
-    def get_next_n(self, count: int) -> List[Any]:
+    def get_next(self, count: int) -> List[Any]:
         if count > self.pool_size():
             LOG.info('Requested count larger than pool size')
             self.fill_pool()
