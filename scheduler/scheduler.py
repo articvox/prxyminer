@@ -41,6 +41,7 @@ class Scheduler:
             logging.warning('Scheduler already stopped - discarding stop request')
         else:
             self.interruptible.set()
+
         return self
 
     def interval(self, interval_s: int, callback: Callable) -> Scheduler:
